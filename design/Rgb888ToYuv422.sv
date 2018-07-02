@@ -40,7 +40,7 @@ module Rgb888ToYuv422(
 	assign v_valid = 1;
 	assign v_data = 200;
 `ifdef OLD_VERILOG_SYNTAX
-Rgb888ToYuv422 u_old_style_verilog_wrapper(
+Rgb888ToYuv422Verilog u_old_style_verilog_wrapper(
 	.clk(clk),
 	.rst(rst),
 	.rgb_valid(rgb_valid),

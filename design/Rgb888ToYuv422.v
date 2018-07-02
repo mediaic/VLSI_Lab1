@@ -1,4 +1,4 @@
-module Rgb888ToYuv422(
+module Rgb888ToYuv422Verilog(
 	input clk,
 	input rst,
 	// RGB pixel stream

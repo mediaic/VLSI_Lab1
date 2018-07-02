@@ -35,7 +35,7 @@ module RgbToYuv(
 	assign u_data = 100;
 	assign v_data = 200;
 `ifdef OLD_VERILOG_SYNTAX
-RgbToYuv u_old_style_verilog_wrapper(
+RgbToYuvVerilog u_old_style_verilog_wrapper(
 	.clk(clk),
 	.rst(rst),
 	.rgb_valid(rgb_valid),

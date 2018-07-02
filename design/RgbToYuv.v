@@ -1,4 +1,4 @@
-module RgbToYuv(
+module RgbToYuvVerilog(
 	input clk,
 	input rst,
 	// RGB pixel stream
