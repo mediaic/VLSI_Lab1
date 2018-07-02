@@ -1,3 +1,7 @@
+`ifdef OLD_VERILOG_SYNTAX
+`include "Rgb888ToYuv422.v"
+`endif
+
 module Rgb888ToYuv422(
 	input clk,
 	input rst,
@@ -35,4 +39,28 @@ module Rgb888ToYuv422(
 	assign u_data = 100;
 	assign v_valid = 1;
 	assign v_data = 200;
+`ifdef OLD_VERILOG_SYNTAX
+Rgb888ToYuv422 u_old_style_verilog_wrapper(
+	.clk(clk),
+	.rst(rst),
+	.rgb_valid(rgb_valid),
+	.rgb_ready(rgb_ready),
+	.rgb_data({rgb_data[2], rgb_data[1], rgb_data[0]}),
+	.pixel_count_valid(pixel_count_valid),
+	.pixel_count_ready(pixel_count_ready),
+	.pixel_count(pixel_count),
+	.coeff_valid(coeff_valid),
+	.coeff_ready(coeff_ready),
+	.coeff_data(coeff_data),
+	.y_valid(y_valid),
+	.y_ready(y_ready),
+	.y_data(y_data),
+	.u_valid(u_valid),
+	.u_ready(u_ready),
+	.u_data(u_data),
+	.v_valid(v_valid),
+	.v_ready(v_ready),
+	.v_data(v_data)
+);
+`endif
 endmodule

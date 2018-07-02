@@ -1,3 +1,7 @@
+`ifdef OLD_VERILOG_SYNTAX
+`include "RgbToYuv.v"
+`endif
+
 module RgbToYuv(
 	input clk,
 	input rst,
@@ -30,4 +34,35 @@ module RgbToYuv(
 	assign y_data = 0;
 	assign u_data = 100;
 	assign v_data = 200;
+`ifdef OLD_VERILOG_SYNTAX
+RgbToYuv u_old_style_verilog_wrapper(
+	.clk(clk),
+	.rst(rst),
+	.rgb_valid(rgb_valid),
+	.rgb_ready(rgb_ready),
+	.rgb_data({rgb_data[2], rgb_data[1], rgb_data[0]}),
+	.coeffs_valid(coeffs_valid),
+	.coeffs_ready(coeffs_ready),
+	.coeffs_data({
+		coeffs_data[8],
+		coeffs_data[7],
+		coeffs_data[6],
+		coeffs_data[5],
+		coeffs_data[4],
+		coeffs_data[3],
+		coeffs_data[2],
+		coeffs_data[1],
+		coeffs_data[0]
+	})
+	.y_valid(y_valid),
+	.y_ready(y_ready),
+	.y_data(y_data),
+	.u_valid(u_valid),
+	.u_ready(u_ready),
+	.u_data(u_data),
+	.v_valid(v_valid),
+	.v_ready(v_ready),
+	.v_data(v_data)
+);
+`endif
 endmodule

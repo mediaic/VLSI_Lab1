@@ -1,3 +1,7 @@
+`ifdef OLD_VERILOG_SYNTAX
+`include "CoeffCollect.v"
+`endif
+
 module CoeffCollect(
 	input clk,
 	input rst,
@@ -20,4 +24,29 @@ module CoeffCollect(
 	always_comb begin
 		for (int i = 0; i < 9; i++) coeffs_data[i] = i;
 	end
+`ifdef OLD_VERILOG_SYNTAX
+CoeffCollectVerilog u_old_style_verilog_wrapper(
+	.clk(clk),
+	.rst(rst),
+	.pixel_count_valid(pixel_count_valid),
+	.pixel_count_ready(pixel_count_ready),
+	.pixel_count(pixel_count),
+	.coeff_valid(coeff_valid),
+	.coeff_ready(coeff_ready),
+	.coeff_data(coeff_data),
+	.coeffs_valid(coeffs_valid),
+	.coeffs_ready(coeffs_ready),
+	.coeffs_data({
+		coeffs_data[8],
+		coeffs_data[7],
+		coeffs_data[6],
+		coeffs_data[5],
+		coeffs_data[4],
+		coeffs_data[3],
+		coeffs_data[2],
+		coeffs_data[1],
+		coeffs_data[0]
+	})
+);
+`endif
 endmodule
