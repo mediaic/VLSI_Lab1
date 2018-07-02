@@ -50,13 +50,13 @@
 
 以下是移除控制信號、只保留資料信號的簡化圖。
 
-![top simple](3.png)
+![top simple](./figure/3.png)
 
 ## 系統描述
 ### 輸入端彩色影像訊號
 下圖為一張彩色影像，影像中的每一點訊號稱為 pixel，每個 pixel 是由色彩三元素 R (Red)、G (Green)、B (Blue) 三基色分量的強弱組合來決定一個 pixel 的顏色。例如：RGB 三基色分量(R,G,B) = (0,0,0)（即都最弱）時，該 pixel 會呈現黑色；當 RGB 三基色分量 (R,G,B) = (255,255,255)（即都最強）時，該 pixel 會呈現白色。因此調整 RGB 三基色分量的值，可以調出各式各樣的顏色，本題 RGB 皆以 8 位元無號整數表示（unsigned 8-bit 即訊號強度為 0~255），故彩色影像訊號的每個 pixel 由 3 個 8 位元信號表示輸入 CSTM 電路，在 SystemVerilog 語法允許輸入輸出為多維度，若是 Verilog 必須將信號串成單個 24-bit。本題影像尺寸不固定，其輸入順序係由左到右、上到下的順序，輸入至的 CSTE 電路中。
 
-![pixel](1.png)
+![pixel](./figure/1.png)
 
 注意:
 1. 任何一個 pixel 之影像訊號只能讀取一次，並無反覆讀取之功能。
@@ -82,11 +82,11 @@ Y 的數字總和為 256，UV 的正負數字總和各為 127，加上 +128 的�
 
 ### ISE 輸入時序規格
 Reset 結束之後，Host 把 `rgb_valid` 變為 high 同時，送出第一筆 pixel，本次的預設模擬有 952 個 pixels。假設需要暫停影像訊號輸入，可將 `rgb_ready` 拉為 low，Host `rgb_data` 的訊號便維持不變，假設 CSTE 需要繼續獲得下一筆 pixel，便將該訊號重新設為 high 即可！另外，若是 `rgb_valid` 為 low 的時間，`pixel_ready` 要設為 high 或是 low 都可以。
-![rgb](6.png)
+![rgb](./figure/6.png)
 
 轉換係數由 `coeff_data` 以及 `pixel_count` 兩個輸入，遵循相同的 valid/ready 的規範。
 
-![coefficient](5.png)
+![coefficient](./figure/5.png)
 
 為了成功輸入係數，需要從 `pixel_count` 輸入一個數量（可以假設都是偶數），以及從 `coeff_data` 輸入九個係數。例如此圖表示總共有 252 個從 `rgb_data` 資料輸入的 pixels，都由這個轉換係數產生 YUV pixel 輸出。
 
@@ -104,7 +104,7 @@ V = ((-66*R-61*G+127*B+128) >> 8) + 128
 以上 YUV 三個 channel 輸出、接收的時間沒有規定順序，有可能在任何時間來。另外，在取得所有輸入 pixel 之前就輸出完畢是有效的，本規範中並無規範相依性，然而這需要 CSTE 電路有預知能力才可能做到。
 
 ## CSTE 架構
-![architecture](4.png)
+![architecture](./figure/4.png)
 
 ## 測試樣本
 本次測試樣本由 Python 隨機生成 700+252 pixels，兩組 pixel 分別是不同的轉換係數依序輸入。
