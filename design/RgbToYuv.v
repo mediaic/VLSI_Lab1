@@ -4,7 +4,7 @@ module RgbToYuvVerilog(
 	// RGB pixel stream
 	input         rgb_valid,
 	output        rgb_ready,
-	input  [20:0] rgb_data,
+	input  [23:0] rgb_data,
 	// Coefficients (signed)
 	input         coeffs_valid,
 	output        coeffs_ready,

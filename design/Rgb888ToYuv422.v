@@ -4,7 +4,7 @@ module Rgb888ToYuv422Verilog(
 	// RGB pixel stream
 	input         rgb_valid,
 	output        rgb_ready,
-	input  [20:0] rgb_data,
+	input  [23:0] rgb_data,
 	// How many pixels to handle?
 	input         pixel_count_valid,
 	output        pixel_count_ready,
