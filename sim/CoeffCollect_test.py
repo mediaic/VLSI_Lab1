@@ -38,8 +38,8 @@ def main():
 	test = scb.GetTest("CoeffCollect")
 	st = Stacker(N_ANS, callbacks=[test.Get])
 	bg = BusGetter(callbacks=[st.Get])
-	masterp = TwoWire.Master(pvalid, pready, pdata, ck_ev, A=1, B=100)
-	masterc = TwoWire.Master(cvalid, cready, cdata, ck_ev, A=1, B=100)
+	masterp = TwoWire.Master(pvalid, pready, pdata, ck_ev)
+	masterc = TwoWire.Master(cvalid, cready, cdata, ck_ev)
 	slave = TwoWire.Slave(csvalid, csready, csdata, ck_ev, A=1, B=2, callbacks=[bg.Get])
 	mdatap = masterp.values
 	mdatac = masterc.values
