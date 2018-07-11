@@ -8,7 +8,7 @@ module RgbToYuvVerilog(
 	// Coefficients (signed)
 	input         coeffs_valid,
 	output        coeffs_ready,
-	input  [71:0] coeffs_data,
+	input  [80:0] coeffs_data,
 	// Y pixel stream
 	output       y_valid,
 	input        y_ready,

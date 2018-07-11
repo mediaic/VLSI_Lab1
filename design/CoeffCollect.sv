@@ -1,4 +1,4 @@
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 `include "CoeffCollect.v"
 `endif
 
@@ -24,7 +24,7 @@ module CoeffCollect(
 	always_comb begin
 		for (int i = 0; i < 9; i++) coeffs_data[i] = i;
 	end
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 CoeffCollectVerilog u_old_style_verilog_wrapper(
 	.clk(clk),
 	.rst(rst),

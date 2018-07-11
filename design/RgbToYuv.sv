@@ -1,4 +1,4 @@
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 `include "RgbToYuv.v"
 `endif
 
@@ -34,7 +34,7 @@ module RgbToYuv(
 	assign y_data = 0;
 	assign u_data = 100;
 	assign v_data = 200;
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 RgbToYuvVerilog u_old_style_verilog_wrapper(
 	.clk(clk),
 	.rst(rst),

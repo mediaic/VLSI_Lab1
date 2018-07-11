@@ -12,6 +12,6 @@ module CoeffCollectVerilog(
 	// Coefficients (signed)
 	output        coeffs_valid,
 	input         coeffs_ready,
-	output [71:0] coeffs_data
+	output [80:0] coeffs_data
 );
 endmodule

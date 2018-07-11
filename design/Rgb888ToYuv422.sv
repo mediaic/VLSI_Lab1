@@ -1,4 +1,4 @@
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 `include "Rgb888ToYuv422.v"
 `endif
 
@@ -39,7 +39,7 @@ module Rgb888ToYuv422(
 	assign u_data = 100;
 	assign v_valid = 1;
 	assign v_data = 200;
-`ifdef OLD_VERILOG_SYNTAX
+`ifdef OLD_VERILOG_STYLE
 Rgb888ToYuv422Verilog u_old_style_verilog_wrapper(
 	.clk(clk),
 	.rst(rst),
