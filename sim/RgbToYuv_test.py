@@ -84,7 +84,9 @@ def main():
 
 	for i in range(100):
 		yield ck_ev
-	assert st.is_clean
+	assert sty.is_clean
+	assert stu.is_clean
+	assert stv.is_clean
 	FinishSim()
 
 RegisterCoroutines([
