@@ -29,7 +29,7 @@ def main():
 		(("dut", "coeffs_ready"),),
 		(("dut", "pixel_count"),),
 		(("dut", "coeff_data"),),
-		(("dut", "coeffs_data", (9,)),),
+		((""   , "csdata_sext", (9,)),),
 	])
 	rst_out_ev, ck_ev = CreateEvents(["rst_out", "ck_ev"])
 

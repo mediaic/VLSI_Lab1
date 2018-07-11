@@ -22,6 +22,13 @@ initial begin
 	$finish;
 end
 
-CoeffCollect dut(clk, rst);
+logic [8:0] csdata [9];
+logic signed [31:0] csdata_sext [9];
+always begin
+	for (int i = 0; i < 9; i++) begin
+		csdata_sext[i] = $signed(csdata[i]);
+	end
+end
+CoeffCollect dut(.clk(clk), .rst(rst), .coeffs_data(csdata));
 
 endmodule
