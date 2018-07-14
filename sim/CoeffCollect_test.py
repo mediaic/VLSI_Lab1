@@ -1,6 +1,7 @@
 from nicotb import *
 from nicotb.utils import Scoreboard, BusGetter, Stacker
 from nicotb.protocol import OneWire, TwoWire
+from nicotb.primitives import JoinableFork
 from itertools import repeat
 import MyModel as M
 import numpy as np
