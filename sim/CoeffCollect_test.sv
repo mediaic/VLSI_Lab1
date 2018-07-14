@@ -17,7 +17,7 @@ initial begin
 	#1 $NicotbInit();
 	#11 rst = 0;
 	#10 rst = 1;
-	#4000 $display("Timeout");
+	#8000 $display("Timeout");
 	$NicotbFinal();
 	$finish;
 end

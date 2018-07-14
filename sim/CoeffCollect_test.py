@@ -58,8 +58,12 @@ def main():
 			for j in i[1].flat:
 				mdatac.coeff_data[0] = j
 				yield mdatac
-	Fork(masterp.SendIter(IterP()))
-	yield from masterc.SendIter(IterC())
+	th_1 = JoinableFork(masterp.SendIter(IterP()))
+	th_2 = JoinableFork(masterc.SendIter(IterC()))
+	yield from th_1.Join()
+	yield from th_2.Join()
+	th_1.Destroy()
+	th_2.Destroy()
 
 	for i in range(100):
 		yield ck_ev

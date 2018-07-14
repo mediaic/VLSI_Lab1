@@ -67,6 +67,7 @@ def main():
 	slaveu = TwoWire.Slave(uvalid, uready, udata, ck_ev, A=1, B=2, callbacks=[bgu.Get])
 	slavev = TwoWire.Slave(vvalid, vready, vdata, ck_ev, A=1, B=2, callbacks=[bgv.Get])
 	mdatac = masterc.values
+	mdatan = mastern.values
 	mdatap = masterp.values
 	testy.Expect((gold_y[:,np.newaxis],))
 	testu.Expect((gold_u[:,np.newaxis],))
@@ -88,12 +89,21 @@ def main():
 		for i in range(N_Y):
 			np.copyto(mdatap.rgb_data, gold_rgb[:,i])
 			yield mdatap
-	Fork(masterc.SendIter(IterC()))
-	yield from masterp.SendIter(IterP())
+	th1 = JoinableFork(masterc.SendIter(IterC()))
+	th2 = JoinableFork(mastern.SendIter(IterN()))
+	th3 = JoinableFork(masterp.SendIter(IterP()))
+	yield from th1.Join()
+	yield from th2.Join()
+	yield from th3.Join()
+	th1.Destroy()
+	th2.Destroy()
+	th3.Destroy()
 
 	for i in range(100):
 		yield ck_ev
-	assert st.is_clean
+	assert sty.is_clean
+	assert stu.is_clean
+	assert stv.is_clean
 	FinishSim()
 
 RegisterCoroutines([
