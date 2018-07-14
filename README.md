@@ -134,3 +134,4 @@ V = ((-66*R-61*G+127*B+128) >> 8) + 128
 	* `design/RgbToYuv.v`
 * Gate level 模擬需要將檔案放在 `syn/Rgb888ToYuv422_syn.sv` 下，並執行：
 	* `make SYN=true top`
+	* 你可能要改 Makefile 第二行的 library 路徑。
