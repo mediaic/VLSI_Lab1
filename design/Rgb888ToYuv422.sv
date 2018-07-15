@@ -2,7 +2,10 @@
 `ifdef SYN
 `include "Rgb888ToYuv422_syn.v"
 `else
+`include "Downsample.sv"
 `include "Rgb888ToYuv422.v"
+`include "CoeffCollect.v"
+`include "RgbToYuv.v"
 `endif
 `else
 `include "CoeffCollect.sv"

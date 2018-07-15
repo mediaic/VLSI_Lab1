@@ -1,6 +1,10 @@
+`ifndef SYN
+`include "Helper.sv"
+`endif
 `ifdef OLD_VERILOG_STYLE
 `include "CoeffCollect.v"
 `endif
+
 
 module CoeffCollect(
 	input clk,
