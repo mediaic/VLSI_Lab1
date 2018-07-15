@@ -59,7 +59,7 @@ RgbToYuvVerilog u_old_style_verilog_wrapper(
 		coeffs_data[2],
 		coeffs_data[1],
 		coeffs_data[0]
-	})
+	}),
 	.y_valid(y_valid),
 	.y_ready(y_ready),
 	.y_data(y_data),
