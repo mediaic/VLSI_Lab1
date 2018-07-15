@@ -57,4 +57,28 @@ module Broadcast(
 		else got <= got_w;
 	end
 endmodule
+
+module AcceptIf(
+	input  logic cond,
+	input  logic src_valid,
+	output logic src_ready,
+	output logic dst_valid,
+	input  logic dst_ready
+);
+	parameter bit COND = 1;
+	assign dst_valid = src_valid;
+	assign src_ready = (cond == COND) && dst_ready;
+endmodule
+
+module IgnoreIf(
+	input  logic cond,
+	input  logic src_valid,
+	output logic src_ready,
+	output logic dst_valid,
+	input  logic dst_ready
+);
+	parameter bit COND = 1;
+	assign dst_valid = (cond == COND) && src_valid;
+	assign src_ready = dst_ready;
+endmodule
 `endif
