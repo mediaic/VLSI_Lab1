@@ -63,11 +63,13 @@ module AcceptIf(
 	input  logic src_valid,
 	output logic src_ready,
 	output logic dst_valid,
-	input  logic dst_ready
+	input  logic dst_ready,
+	output logic accept
 );
 	parameter bit COND = 1;
+	assign accept = cond == COND;
 	assign dst_valid = src_valid;
-	assign src_ready = (cond == COND) && dst_ready;
+	assign src_ready = dst_ready && accept;
 endmodule
 
 module IgnoreIf(
@@ -75,10 +77,12 @@ module IgnoreIf(
 	input  logic src_valid,
 	output logic src_ready,
 	output logic dst_valid,
-	input  logic dst_ready
+	input  logic dst_ready,
+	output logic ignore
 );
 	parameter bit COND = 1;
-	assign dst_valid = (cond == COND) && src_valid;
-	assign src_ready = dst_ready;
+	assign ignore = cond == COND;
+	assign dst_valid = !ignore && src_valid;
+	assign src_ready = ignore || dst_ready;
 endmodule
 `endif
