@@ -18,12 +18,15 @@ module CoeffCollect(
 	input  logic       coeffs_ready,
 	output logic [8:0] coeffs_data [9]
 );
+	// TODO: delete me when you are writing your code
+	// From here
 	assign pixel_count_ready = 1;
 	assign coeff_ready = 1;
 	assign coeffs_valid = 1;
 	always_comb begin
 		for (int i = 0; i < 9; i++) coeffs_data[i] = i;
 	end
+	// To here
 `ifdef OLD_VERILOG_STYLE
 CoeffCollectVerilog u_old_style_verilog_wrapper(
 	.clk(clk),
@@ -48,5 +51,7 @@ CoeffCollectVerilog u_old_style_verilog_wrapper(
 		coeffs_data[0]
 	})
 );
+`else
+	// TODO: SystemVerilog version here
 `endif
 endmodule

@@ -4,6 +4,10 @@
 `else
 `include "Rgb888ToYuv422.v"
 `endif
+`else
+`include "CoeffCollect.sv"
+`include "Downsample.sv"
+`include "RgbToYuv.sv"
 `endif
 
 module
@@ -40,6 +44,8 @@ Rgb888ToYuv422
 	input  logic       v_ready,
 	output logic [7:0] v_data
 );
+	// TODO: delete me when you are writing your code
+	// From here
 	assign rgb_ready = 1;
 	assign pixel_count_ready = 1;
 	assign coeff_ready = 1;
@@ -49,6 +55,7 @@ Rgb888ToYuv422
 	assign u_data = 100;
 	assign v_valid = 1;
 	assign v_data = 200;
+	// To here
 `ifdef OLD_VERILOG_STYLE
 `ifdef SYN
 Rgb888ToYuv422
@@ -77,5 +84,7 @@ u_old_style_verilog_wrapper(
 	.v_ready(v_ready),
 	.v_data(v_data)
 );
+`else
+	// TODO: SystemVerilog version here
 `endif
 endmodule

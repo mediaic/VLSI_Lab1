@@ -1,3 +1,6 @@
+`ifndef SYN
+`include "Helper.sv"
+`endif
 `ifdef OLD_VERILOG_STYLE
 `include "RgbToYuv.v"
 `endif
@@ -26,6 +29,8 @@ module RgbToYuv(
 	input  logic       v_ready,
 	output logic [7:0] v_data
 );
+	// TODO: delete me when you are writing your code
+	// From here
 	assign rgb_ready = 1;
 	assign coeffs_ready = 1;
 	assign y_valid = 1;
@@ -34,6 +39,7 @@ module RgbToYuv(
 	assign y_data = 0;
 	assign u_data = 100;
 	assign v_data = 200;
+	// To here
 `ifdef OLD_VERILOG_STYLE
 RgbToYuvVerilog u_old_style_verilog_wrapper(
 	.clk(clk),
@@ -64,5 +70,7 @@ RgbToYuvVerilog u_old_style_verilog_wrapper(
 	.v_ready(v_ready),
 	.v_data(v_data)
 );
+`else
+	// TODO: SystemVerilog version here
 `endif
 endmodule
