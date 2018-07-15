@@ -81,7 +81,7 @@ Y 的數字總和為 256，UV 的正負數字總和各為 127，加上 +128 的�
 所有信號在 `rst` 拉高一次之後開始變動
 
 ### CSTE 輸入時序規格
-Reset 結束之後，Host 把 `rgb_valid` 變為 high 同時，送出第一筆 pixel，本次的預設模擬有 952 個 pixels。假設需要暫停影像訊號輸入，可將 `rgb_ready` 拉為 low，Host `rgb_data` 的訊號便維持不變，假設 CSTE 需要繼續獲得下一筆 pixel，便將該訊號重新設為 high 即可！另外，若是 `rgb_valid` 為 low 的時間，`pixel_ready` 要設為 high 或是 low 都可以。
+Reset 結束之後，Host 把 `rgb_valid` 變為 high 同時，送出第一筆 pixel，本次的預設模擬有 28 個 pixels。假設需要暫停影像訊號輸入，可將 `rgb_ready` 拉為 low，Host `rgb_data` 的訊號便維持不變，假設 CSTE 需要繼續獲得下一筆 pixel，便將該訊號重新設為 high 即可！另外，若是 `rgb_valid` 為 low 的時間，`pixel_ready` 要設為 high 或是 low 都可以。
 ![rgb](./figure/6.png)
 
 轉換係數由 `coeff_data` 以及 `pixel_count` 兩個輸入，遵循相同的 valid/ready 的規範。
@@ -99,7 +99,7 @@ V = ((-66*R-61*G+127*B+128) >> 8) + 128
 以上 pixel 個數、轉換係數、pixel 資料 valid 拉高的時間沒有規定順序。
 
 ### CSTE 輸出時序規格
-當完成電路運算後（或是在輸入的同時就輸出），欲將資料輸出需將 `y_valid` 設為 high，告知 host 端有轉換過後的 pixel 輸出。本題並未規定需要連續輸出，可自行控制 `y_valid` 控制訊號，要輸出就設為 high，不需輸出時設為 low 即可。UV 信號也是用同樣方式輸出。當所有資料輸出後，系統便會自動結束模擬並檢查。預設模擬時間約 2000 cycles，若屆時未達到足夠筆的資料輸出，系統將輸出 timeout 信號。預設模擬有 952 個 pixel，也就是說必須在 `y_data` 觀察到 952 個輸出，`u_data`, `v_data` 看到 476 個。
+當完成電路運算後（或是在輸入的同時就輸出），欲將資料輸出需將 `y_valid` 設為 high，告知 host 端有轉換過後的 pixel 輸出。本題並未規定需要連續輸出，可自行控制 `y_valid` 控制訊號，要輸出就設為 high，不需輸出時設為 low 即可。UV 信號也是用同樣方式輸出。當所有資料輸出後，系統便會自動結束模擬並檢查。預設模擬時間約 2000 cycles，若屆時未達到足夠筆的資料輸出，系統將輸出 timeout 信號。預設模擬有 10+18 個 pixel，也就是說必須在 `y_data` 觀察到 28 個輸出，`u_data`, `v_data` 看到 14 個。
 
 以上 YUV 三個 channel 輸出、接收的時間沒有規定順序，有可能在任何時間來。另外，在取得所有輸入 pixel 之前就輸出完畢是有效的，本規範中並無規範相依性，然而這需要 CSTE 電路有預知能力才可能做到。
 
@@ -107,7 +107,7 @@ V = ((-66*R-61*G+127*B+128) >> 8) + 128
 ![architecture](./figure/4.png)
 
 ## 測試樣本
-本次測試樣本由 Python 隨機生成 700+252 pixels，兩組 pixel 分別是不同的轉換係數依序輸入。
+本次測試樣本由 Python 隨機生成 10+18 pixels，兩組 pixel 分別是不同的轉換係數依序輸入。
 
 ## 規格整理
 * 本練習提供的工作站登入之後輸入 `tool 2` 可以取得 ncverilog 等等的必要工具。

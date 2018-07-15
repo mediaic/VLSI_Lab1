@@ -1,8 +1,8 @@
 from PIL import Image
 import numpy as np
 coeff_test = [
-	(700, np.array([[100, 120, 36], [-107, 127, -20], [-100, -27, 127]], dtype=np.int32)),
-	(252, np.array([[77, 150, 29], [-43, -84, 127], [127, -106, -21]], dtype=np.int32)),
+	(10, np.array([[100, 120, 36], [-107, 127, -20], [-100, -27, 127]], dtype=np.int32)),
+	(18, np.array([[77, 150, 29], [-43, -84, 127], [127, -106, -21]], dtype=np.int32)),
 ]
 
 def RandomPixelStreams():
