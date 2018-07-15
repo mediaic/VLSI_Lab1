@@ -67,7 +67,11 @@ u_old_style_verilog_wrapper(
 	.rst(rst),
 	.rgb_valid(rgb_valid),
 	.rgb_ready(rgb_ready),
+`ifdef SYN
+	.rgb_data({>>{rgb_data}}),
+`else
 	.rgb_data({rgb_data[2], rgb_data[1], rgb_data[0]}),
+`endif
 	.pixel_count_valid(pixel_count_valid),
 	.pixel_count_ready(pixel_count_ready),
 	.pixel_count(pixel_count),
