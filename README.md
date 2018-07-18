@@ -132,6 +132,12 @@ V = ((-66*R-61*G+127*B+128) >> 8) + 128
 	* `design/CoeffCollect.v`
 	* `design/Rgb888ToYuv422.v`
 	* `design/RgbToYuv.v`
+	* 依照上述 sv 裡面說明刪除掉部分程式碼。
 * Gate level 模擬需要將檔案放在 `syn/Rgb888ToYuv422_syn.sv` 下，並執行：
 	* `make SYN=true top`
 	* 你可能要改 Makefile 第二行的 library 路徑。
+* APR 模擬需要：
+	* 將檔案*取代* `syn/Rgb888ToYuv422_syn.sv`，或是改動 `design/Rgb888ToYuv422.sv` 下 include 的路徑
+	* `sim/Rgb888ToYuv422_test.sv` 加入 `$sdf_annotate("YOUR SDF", dut.u_old_style_verilog_wrapper);`
+	* Makefile no timing check 那行換成 `+ncmaxdelays`
+	* 執行 `make SYN=true top`
