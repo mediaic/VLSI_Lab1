@@ -10,16 +10,16 @@ logic clk, rst;
 
 always #1 clk = ~clk;
 initial begin
-	$fsdbDumpfile("RgbToYuv_test.fsdb");
-	$fsdbDumpvars(0, RgbToYuv_test, "+mda");
-	clk = 0;
-	rst = 1;
-	#1 $NicotbInit();
-	#11 rst = 0;
-	#10 rst = 1;
-	#20000 $display("Timeout");
-	$NicotbFinal();
-	$finish;
+    $fsdbDumpfile("RgbToYuv_test.fsdb");
+    $fsdbDumpvars(0, RgbToYuv_test, "+mda");
+    clk = 0;
+    rst = 1;
+    #1 $NicotbInit();
+    #11 rst = 0;
+    #10 rst = 1;
+    #20000 $display("Timeout");
+    $NicotbFinal();
+    $finish;
 end
 
 RgbToYuv dut(clk, rst);

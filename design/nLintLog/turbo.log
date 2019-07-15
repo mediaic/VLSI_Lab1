@@ -1,0 +1,12 @@
+Command Line: /opt/CAD/synopsys/spring/verdi/cur/nLint/platform/LINUXAMD64/bin/nLint -sv Rgb888ToYuv422.sv -out screen
+uname(Linux media10 5.1.9-arch1-1-ARCH #1 SMP PREEMPT Tue Jun 11 16:18:09 UTC 2019 x86_64)
+nLint Release K-2015.09-SP1 (RH Linux x86_64/64bit) 11/16/2015
+(C) 1996 - 2015 by Synopsys, Inc.
+All Rights Reserved.
+www.synopsys.com
+
+This program is proprietary and confidential information of Synopsys, Inc. and 
+may be used and disclosed only as authorized in a license agreement controlling 
+such use and disclosure.
+
+au time 0.054627 0.006556 0.000350 delta 786384 786384 total 3949512 3949512

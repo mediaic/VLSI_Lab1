@@ -2,12 +2,12 @@ NICOTB=/opt/nicotb/lib
 TSMC13DIR=/opt/CAD/cell_lib/CBDK_IC_Contest_v2.1
 IRUN=irun
 ifdef SYN
-VFLAG=+define+OLD_VERILOG_STYLE +define+SYN
-TSMC13=$(TSMC13DIR)/Verilog/tsmc13.v
-else
-ifdef USE_VERILOG
-VFLAG=+define+OLD_VERILOG_STYLE
-endif
+    VFLAG=+define+OLD_VERILOG_STYLE +define+SYN
+    TSMC13=$(TSMC13DIR)/Verilog/tsmc13.v
+    else
+    ifdef USE_VERILOG
+        VFLAG=+define+OLD_VERILOG_STYLE
+    endif
 endif
 
 top:
@@ -57,4 +57,4 @@ $(NICOTB)/cpp/nicotb.so:
 	make -C $(NICOTB)/cpp/
 
 clean:
-	-rm -rf ncsim* novas* irun* *.rc scoreboard.db __pycache__ INCA_libs
+	-rm -rf ncsim* novas* irun* *.rc scoreboard.db __pycache__ INCA_libs *.fsdb

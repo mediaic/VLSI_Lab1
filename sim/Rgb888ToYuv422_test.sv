@@ -18,16 +18,16 @@ logic clk, rst;
 
 always #5 clk = ~clk;
 initial begin
-	$fsdbDumpfile("Rgb888ToYuv422_test.fsdb");
-	$fsdbDumpvars(0, Rgb888ToYuv422_test, "+mda");
-	clk = 0;
-	rst = 1;
-	#1 $NicotbInit();
-	#31 rst = 0;
-	#30 rst = 1;
-	#20000 $display("Timeout");
-	$NicotbFinal();
-	$finish;
+    $fsdbDumpfile("Rgb888ToYuv422_test.fsdb");
+    $fsdbDumpvars(0, Rgb888ToYuv422_test, "+mda");
+    clk = 0;
+    rst = 1;
+    #1 $NicotbInit();
+    #31 rst = 0;
+    #30 rst = 1;
+    #20000 $display("Timeout");
+    $NicotbFinal();
+    $finish;
 end
 
 `ifdef SYN
