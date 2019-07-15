@@ -69,3 +69,6 @@ report_area   > ./Rgb888ToYuv422_syn.area_rpt
 report_timing > ./Rgb888ToYuv422_syn.timing_rpt
 report_power  > ./Rgb888ToYuv422_syn.power_rpt
 
+report_timing -path full -delay max -max_paths 1 -nworst 1
+report_area -nosplit
+
