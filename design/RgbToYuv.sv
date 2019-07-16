@@ -29,17 +29,7 @@ module RgbToYuv(
     input  logic       v_ready,
     output logic [7:0] v_data
 );
-    // TODO: delete me when you are writing your code
-    // From here
-    assign rgb_ready = 1;
-    assign coeffs_ready = 1;
-    assign y_valid = 1;
-    assign u_valid = 1;
-    assign v_valid = 1;
-    assign y_data = 0;
-    assign u_data = 100;
-    assign v_data = 200;
-    // To here
+
 `ifdef OLD_VERILOG_STYLE
 RgbToYuvVerilog u_old_style_verilog_wrapper(
     .clk(clk),
@@ -71,6 +61,93 @@ RgbToYuvVerilog u_old_style_verilog_wrapper(
     .v_data(v_data)
 );
 `else
-    // TODO: SystemVerilog version here
+    // functional model !!!
+    integer O[3];
+    integer P[3];
+    integer C[9];
+    bit fp,fc,fy,fu,fv;
+    initial begin
+        rgb_ready = 1;
+        coeffs_ready = 1;
+        y_valid = 0;
+        u_valid = 0;
+        v_valid = 0;
+        @(negedge rst)
+        @(posedge rst)
+        // input data
+        for (int i = 0; i < 28; i++) begin 
+            fp = 1;
+            fc = 1;
+            fy = 1;
+            fu = 1;
+            fv = 1;
+            forever begin                
+                @(posedge clk)
+                if (fp & rgb_valid) begin
+                    rgb_ready <= 0;
+                    fp <= 0;
+                    P[0] = rgb_data[0];
+                    P[1] = rgb_data[1];
+                    P[2] = rgb_data[2];
+                end
+                if (fc & coeffs_valid) begin
+                    coeffs_ready <= 0;
+                    fc <= 0;
+                    C[0] = $signed(coeffs_data[0]);
+                    C[1] = $signed(coeffs_data[1]);
+                    C[2] = $signed(coeffs_data[2]);
+                    C[3] = $signed(coeffs_data[3]);
+                    C[4] = $signed(coeffs_data[4]);
+                    C[5] = $signed(coeffs_data[5]);
+                    C[6] = $signed(coeffs_data[6]);
+                    C[7] = $signed(coeffs_data[7]);
+                    C[8] = $signed(coeffs_data[8]);
+                end
+                if (rgb_valid && coeffs_valid) begin
+                    O[0] = 128;
+                    O[1] = 128;
+                    O[2] = 128;
+                    
+                    O[0] += P[0]*C[0]+P[1]*C[1]+P[2]*C[2];
+                    O[1] += P[0]*C[3]+P[1]*C[4]+P[2]*C[5];
+                    O[2] += P[0]*C[6]+P[1]*C[7]+P[2]*C[8];
+                    break;
+                end
+            end
+            
+            // enable output
+            rgb_ready <= 0;
+            coeffs_ready <= 0;
+            y_valid <= 1;
+            u_valid <= 1;
+            v_valid <= 1;
+
+            y_data <= O[0][15:8];
+            u_data <= O[1][15:8]+128;
+            v_data <= O[2][15:8]+128;
+
+            // disable output            
+            forever begin
+                @(posedge clk)
+                if (fy & y_ready) begin
+                    y_valid <= 0;
+                    fy <= 0;
+                end
+                if (fu & u_ready) begin
+                    u_valid <= 0;
+                    fu <= 0;
+                end
+                if (fv & v_ready) begin
+                    v_valid <= 0;
+                    fv <= 0;
+                end
+                if (!(y_valid | u_valid | v_valid))
+                    break;
+            end
+            rgb_ready <= 1;
+            coeffs_ready <= 1;
+        end
+    end
+    
 `endif
 endmodule
