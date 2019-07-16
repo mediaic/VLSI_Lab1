@@ -103,7 +103,7 @@ RgbToYuvVerilog u_old_style_verilog_wrapper(
                     C[7] = $signed(coeffs_data[7]);
                     C[8] = $signed(coeffs_data[8]);
                 end
-                if (rgb_valid && coeffs_valid) begin
+                if (!(fp | fc)) begin
                     O[0] = 128;
                     O[1] = 128;
                     O[2] = 128;
