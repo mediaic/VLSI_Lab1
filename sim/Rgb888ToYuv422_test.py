@@ -76,8 +76,6 @@ def main():
     '''
     
     # Check the data at slave.
-    # This create a tuple of two column vectors of size 16.
-    # tag, type
     # TODO
     '''from here
     
