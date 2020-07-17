@@ -3,7 +3,7 @@ TSMC13DIR=/opt/CAD/cell_lib/CBDK_IC_Contest_v2.1
 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libpython3.6m.so.1
 IRUN=irun
 ifdef SYN
-    VFLAG=+define+SYN
+    VFLAG=+define+SYN +ncmaxdelays -y
     TSMC13=$(TSMC13DIR)/Verilog/tsmc13.v
 endif
 
@@ -42,11 +42,11 @@ dump_scoreboard:
 	TOPMODULE=$(TOP) \
 	PYTHONPATH=$(NICOTB)/python:. \
 	$(IRUN) +access+rw -loadvpi $(NICOTB)/cpp/nicotb.so:VpiBoot \
-	+nospecify +notimingchecks +delay_mode_unit \
+	+nospecify +delay_mode_unit \
 	+incdir+../design/ \
 	+incdir+../syn/ \
 	$(if $(COVERAGE),-covoverwrite -coverage block -covtest $(TOP) -covdut $(TOP),) \
-	$(ARGS) $(NICOTB)/verilog/Utils.sv $(TSMC13) $<
+	$(ARGS) $(NICOTB)/verilog/Utils.sv -v $(TSMC13) $<
 
 $(NICOTB)/cpp/nicotb.so:
 	make -C $(NICOTB)/cpp/
