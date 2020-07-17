@@ -75,6 +75,18 @@ def main():
     to here
     '''
     
+    # Write constant value.
+    # Let enable = 1 for clock gating.
+    # TODO
+    '''
+    from here
+    
+    
+    
+    
+    to here
+    '''
+    
     # Check the data at slave.
     # TODO
     '''from here
