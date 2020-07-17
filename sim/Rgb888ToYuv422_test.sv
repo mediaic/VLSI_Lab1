@@ -10,11 +10,7 @@ module Rgb888ToYuv422_test;
 
 logic clk, rst;
 `Pos(rst_out, rst)
-`ifdef SYN
 `PosIfDelayed(ck_ev, clk, rst, 1)
-`else
-`PosIf(ck_ev, clk, rst)
-`endif
 `WithFinish
 
 always #5 clk = ~clk;
