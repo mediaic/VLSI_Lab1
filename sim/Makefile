@@ -4,7 +4,7 @@ LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libpython3.6m.so.1
 IRUN=irun
 ifdef SYN
     VFLAG=+define+SYN +ncmaxdelays -y
-    TSMC13=$(TSMC13DIR)/Verilog/tsmc13.v
+    TSMC13=-v $(TSMC13DIR)/Verilog/tsmc13.v
 endif
 
 top:
@@ -46,7 +46,7 @@ dump_scoreboard:
 	+incdir+../design/ \
 	+incdir+../syn/ \
 	$(if $(COVERAGE),-covoverwrite -coverage block -covtest $(TOP) -covdut $(TOP),) \
-	$(ARGS) $(NICOTB)/verilog/Utils.sv -v $(TSMC13) $<
+	$(ARGS) $(NICOTB)/verilog/Utils.sv $(TSMC13) $<
 
 $(NICOTB)/cpp/nicotb.so:
 	make -C $(NICOTB)/cpp/
