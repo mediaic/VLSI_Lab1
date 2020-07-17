@@ -3,55 +3,55 @@
 module Forward(
     input  logic clk,
     input  logic rst,
-    input  logic src_valid,
-    output logic src_ready,
-    output logic dst_valid,
-    input  logic dst_ready
+    input  logic src_rdy,
+    output logic src_ack,
+    output logic dst_rdy,
+    input  logic dst_ack
 );
-    logic dst_valid_w;
-    assign dst_valid_w = src_valid || (dst_valid && !dst_ready);
-    assign src_ready = !dst_valid || dst_ready;
+    logic dst_rdy_w;
+    assign dst_rdy_w = src_rdy || (dst_rdy && !dst_ack);
+    assign src_ack = !dst_rdy || dst_ack;
     always_ff @(posedge clk or negedge rst) begin
-        if (!rst) dst_valid <= 1'b0;
-        else dst_valid <= dst_valid_w;
+        if (!rst) dst_rdy <= 1'b0;
+        else dst_rdy <= dst_rdy_w;
     end
 endmodule
 
 module Merge(
-    src_valids,
-    src_readys,
-    dst_valid,
-    dst_ready
+    src_rdys,
+    src_acks,
+    dst_rdy,
+    dst_ack
 );
     parameter N = 2;
-    input  logic [N-1:0] src_valids;
-    output logic [N-1:0] src_readys;
-    output logic dst_valid;
-    input  logic dst_ready;
-    assign dst_valid = &src_valids;
-    assign src_readys = {N{dst_valid && dst_ready}};
+    input  logic [N-1:0] src_rdys;
+    output logic [N-1:0] src_acks;
+    output logic dst_rdy;
+    input  logic dst_ack;
+    assign dst_rdy = &src_rdys;
+    assign src_acks = {N{dst_rdy && dst_ack}};
 endmodule
 
 module Broadcast(
     clk,
     rst,
-    src_valid,
-    src_ready,
-    dst_valids,
-    dst_readys
+    src_rdy,
+    src_ack,
+    dst_rdys,
+    dst_acks
 );
     parameter N = 2;
     input  logic clk;
     input  logic rst;
-    input  logic src_valid;
-    output logic src_ready;
-    output logic [N-1:0] dst_valids;
-    input  logic [N-1:0] dst_readys;
+    input  logic src_rdy;
+    output logic src_ack;
+    output logic [N-1:0] dst_rdys;
+    input  logic [N-1:0] dst_acks;
     logic [N-1:0] got, got_test, got_w;
-    assign dst_valids = {N{src_valid}} & ~got;
-    assign got_test = got | dst_readys;
-    assign src_ready = &got_test;
-    assign got_w = (src_valid && !src_ready) ? got_test : '0;
+    assign dst_rdys = {N{src_rdy}} & ~got;
+    assign got_test = got | dst_acks;
+    assign src_ack = &got_test;
+    assign got_w = (src_rdy && !src_ack) ? got_test : '0;
     always_ff @(posedge clk or negedge rst) begin
         if (!rst) got <= '0;
         else got <= got_w;
@@ -60,29 +60,29 @@ endmodule
 
 module AcceptIf(
     input  logic cond,
-    input  logic src_valid,
-    output logic src_ready,
-    output logic dst_valid,
-    input  logic dst_ready,
+    input  logic src_rdy,
+    output logic src_ack,
+    output logic dst_rdy,
+    input  logic dst_ack,
     output logic accept
 );
     parameter bit COND = 1;
     assign accept = cond == COND;
-    assign dst_valid = src_valid;
-    assign src_ready = dst_ready && accept;
+    assign dst_rdy = src_rdy;
+    assign src_ack = dst_ack && accept;
 endmodule
 
 module IgnoreIf(
     input  logic cond,
-    input  logic src_valid,
-    output logic src_ready,
-    output logic dst_valid,
-    input  logic dst_ready,
+    input  logic src_rdy,
+    output logic src_ack,
+    output logic dst_rdy,
+    input  logic dst_ack,
     output logic ignore
 );
     parameter bit COND = 1;
     assign ignore = cond == COND;
-    assign dst_valid = !ignore && src_valid;
-    assign src_ready = ignore || dst_ready;
+    assign dst_rdy = !ignore && src_rdy;
+    assign src_ack = ignore || dst_ack;
 endmodule
 `endif

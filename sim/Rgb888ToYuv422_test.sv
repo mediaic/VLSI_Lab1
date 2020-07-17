@@ -4,6 +4,7 @@
 `timescale 1ns/1ns
 `endif
 `include "Rgb888ToYuv422.sv"
+`define SDFFILE     "../syn/Rgb888ToYuv422_syn.sdf"
 
 module Rgb888ToYuv422_test;
 
@@ -20,6 +21,9 @@ always #5 clk = ~clk;
 initial begin
     $fsdbDumpfile("Rgb888ToYuv422_test.fsdb");
     $fsdbDumpvars(0, Rgb888ToYuv422_test, "+mda");
+`ifdef SYN
+    $sdf_annotate(`SDFFILE, dut.gate_wrapper);
+`endif
     clk = 0;
     rst = 1;
     #1 $NicotbInit();

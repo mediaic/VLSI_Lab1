@@ -14,14 +14,14 @@ def main():
 
     # Connect to Verilog
     (
-        ivalid, iready,
-        ovalid, oready,
+        irdy, iack,
+        ordy, oack,
         idata, odata,
     ) = CreateBuses([
-        (("dut", "i_valid"),),
-        (("dut", "i_ready"),),
-        (("dut", "o_valid"),),
-        (("dut", "o_ready"),),
+        (("dut", "i_rdy"),),
+        (("dut", "i_ack"),),
+        (("dut", "o_rdy"),),
+        (("dut", "o_ack"),),
         (("dut", "i_data"),),
         (("dut", "o_data"),),
     ])
@@ -32,8 +32,8 @@ def main():
     test = scb.GetTest("Counter")
     st = Stacker(N_ANS, callbacks=[test.Get])
     bg = BusGetter(callbacks=[st.Get])
-    master = TwoWire.Master(ivalid, iready, idata, ck_ev, A=1, B=2)
-    slave = TwoWire.Slave(ovalid, oready, odata, ck_ev, A=1, B=2, callbacks=[bg.Get])
+    master = TwoWire.Master(irdy, iack, idata, ck_ev, A=1, B=2)
+    slave = TwoWire.Slave(ordy, oack, odata, ck_ev, A=1, B=2, callbacks=[bg.Get])
     mdata = master.values
     test.Expect((gold_out[:,np.newaxis],))
 

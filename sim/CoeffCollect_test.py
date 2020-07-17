@@ -17,17 +17,17 @@ def main():
 
     # Connect to Verilog
     (
-        pvalid, pready,
-        cvalid, cready,
-        csvalid, csready,
+        prdy, pack,
+        crdy, cack,
+        csrdy, csack,
         pdata, cdata, csdata
     ) = CreateBuses([
-        (("dut", "pixel_count_valid"),),
-        (("dut", "pixel_count_ready"),),
-        (("dut", "coeff_valid"),),
-        (("dut", "coeff_ready"),),
-        (("dut", "coeffs_valid"),),
-        (("dut", "coeffs_ready"),),
+        (("dut", "pixel_count_rdy"),),
+        (("dut", "pixel_count_ack"),),
+        (("dut", "coeff_rdy"),),
+        (("dut", "coeff_ack"),),
+        (("dut", "coeffs_rdy"),),
+        (("dut", "coeffs_ack"),),
         (("dut", "pixel_count"),),
         (("dut", "coeff_data"),),
         ((""   , "csdata_sext", (9,)),),
@@ -40,9 +40,9 @@ def main():
     st = Stacker(N_ANS, callbacks=[test.Get])
     bg = BusGetter(callbacks=[st.Get])  
     
-    masterp = TwoWire.Master(pvalid, pready, pdata, ck_ev)
-    masterc = TwoWire.Master(cvalid, cready, cdata, ck_ev)
-    slave = TwoWire.Slave(csvalid, csready, csdata, ck_ev, A=1, B=2, callbacks=[bg.Get])
+    masterp = TwoWire.Master(prdy, pack, pdata, ck_ev)
+    masterc = TwoWire.Master(crdy, cack, cdata, ck_ev)
+    slave = TwoWire.Slave(csrdy, csack, csdata, ck_ev, A=1, B=2, callbacks=[bg.Get])
     
     mdatap = masterp.values
     mdatac = masterc.values
