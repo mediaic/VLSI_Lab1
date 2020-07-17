@@ -1,3 +1,4 @@
+`include "Helper.sv"
 module Downsample(
     input clk,
     input rst,
@@ -10,58 +11,45 @@ module Downsample(
     input  logic       o_ack,
     output logic [7:0] o_data
 );
-    logic [8:0] i_summed;
-    logic [1:0] o_counter, o_counter_w;
-    logic [7:0] o_data_w;
-    logic o_rdy_w;
+    logic [8:0] i_tmp;
+    logic o_counter;
 
-    // Combinational
-    assign i_summed = ({1'b0,o_data} + {1'b0,i_data} + 'b1) >> 1;
-    assign i_ack = !o_rdy || o_ack;
-
-    always_comb begin
-        priority case (o_counter)
-            2'd0: begin
-                o_counter_w = 2'd1;
-                o_data_w = i_data;
-                o_rdy_w = 1'b0;
-            end
-            2'd1: begin
-                o_counter_w = 2'd2;
-                o_data_w = i_summed;
-                o_rdy_w = i_rdy;
-            end
-            2'd2: begin
-                if (i_rdy) begin
-                    o_counter_w = 2'd1;
-                    o_data_w = i_data;
-                end else begin
-                    o_counter_w = 2'd0;
-                    o_data_w = i_summed[7:0];
-                end
-                o_rdy_w = !o_ack;
-            end
-        endcase
-    end
+    IgnoreIf IGN(
+        .cond(o_counter!=1),
+        .src_rdy(i_rdy),
+        .src_ack(i_ack),
+        .dst_rdy(g_rdy),
+        .dst_ack(g_ack),
+        .ignore()
+    );
+    
+    Forward F(
+        .clk(clk),
+        .rst(rst),
+        .src_rdy(g_rdy),
+        .src_ack(g_ack),
+        .dst_rdy(o_rdy),
+        .dst_ack(o_ack)
+    );
 
     // Sequential data
     always_ff @(posedge clk or negedge rst) begin
         if (!rst) begin
-            o_counter <= '0;
             o_data <= '0;
         // important: clock gate condition is from previous stage or this stage.
-        end else if (i_rdy && i_ack || o_rdy && o_ack) begin
-            o_counter <= o_counter_w;
-            o_data <= o_data_w;
+        end else if (g_rdy && g_ack) begin
+            o_data <= (i_tmp + i_data) >> 1;
         end
     end
 
     // Sequential control
     always_ff @(posedge clk or negedge rst) begin
         if (!rst) begin
-            o_rdy <= 1'b0;
-        end else begin
-            o_rdy <= o_rdy_w;
+            i_tmp <= 1'b0;
+            o_counter <= '0;
+        end else if (i_rdy && i_ack)begin
+            i_tmp <= i_data+1;
+            o_counter <= o_counter+1;
         end
     end
 endmodule
