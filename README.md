@@ -1,7 +1,7 @@
 # Color Space Transform Engine
 
 ## 問題描述
-請完成 Color Space Transform Engine (CSTE) 的電路設計以。此電路可將二維彩色影像訊號，轉換為 YUV422 格示輸出。有關 CSTE 詳細規格將描述於後。
+完成 Color Space Transform Engine (CSTE) 的電路設計以。此電路可將二維彩色影像訊號，轉換為 YUV422 格示輸出。有關 CSTE 詳細規格將描述於後。
 
 ## 輸入輸出介面
 
