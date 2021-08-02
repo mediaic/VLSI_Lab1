@@ -1,5 +1,13 @@
 # Geofence
 
+## 下載檔案
+```c
+https://drive.google.com/file/d/1ntJw2UeLYac0MAHaaK8vpWsj47Mn1yKW/view?usp=sharing
+```
+
+* 解壓縮
+	* tar xvf VLSI_Lab.tar
+
 ## TODO
 * 完成design/Geofence.v
 * 完成sim/Geofence_test.sv
