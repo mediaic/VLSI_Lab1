@@ -36,7 +36,7 @@ https://drive.google.com/file/d/1ntJw2UeLYac0MAHaaK8vpWsj47Mn1yKW/view?usp=shari
 * grad.data
 	* 測資
 
-## Commandline
+## Command line
 ### nicotb模擬
 ```c
 tool 2
