@@ -6,7 +6,9 @@ https://drive.google.com/file/d/1ntJw2UeLYac0MAHaaK8vpWsj47Mn1yKW/view?usp=shari
 ```
 
 * 解壓縮
-	* tar xvf VLSI_Lab.tar
+	```c
+	tar xvf VLSI_Lab.tar
+	```
 
 ## TODO
 * 完成design/Geofence.v
