@@ -55,7 +55,7 @@ def main():
     yield ck_ev         # wait one more cycle
     
     # Now start sending X,Y,R
-    # hint: yield custom_master()
+    # hint: yield from custom_master()
     # TODO
     
     # 7. end simulation after sending all the data

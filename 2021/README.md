@@ -21,6 +21,7 @@ https://drive.google.com/file/d/1gzKP3Kx_TtFiJ3njWpuT8ul390O-2XPy/view?usp=shari
 * `design`
 	* `Geofence.v`
 	* `ref`
+		* 提供DesignWare的square root module，在Geofence中需要用到。
 		* 提供範例Geofence.v，供測試nicotb
 		* 提供verilog testbench，供測試Geofence.v和nicotb
 * `sim`
